@@ -1,37 +1,22 @@
-version: 0.0
-os: linux
-files:
-  - source: /
-    destination: /home/ec2-user/app
-    overwrite: true
+version: 0.2
 
-permissions:
-  - object: /
-    pattern: "**"
-    owner: ec2-user
-    group: ec2-user
+phases: 
+    build:
+        commands:
+            - echo "Build block"
+            - ls
+            - echo "Running tests to check if "Congratulations" present in index.html file"
+            - grep "Congratulations" index.html
+    post_build:
+        commands:
+            - echo "Post build phase"
+artifacts:
+    files:
+        - scripts/install_dependencies
+        - scripts/start_server
+        - scripts/stop_server
+        - index.html
+        - appspec.yml
+    discard-paths: yes
 
-hooks:
-  ApplicationStop:
-    - location: bin/application_stop.sh
-      timeout: 300
-      runas: ec2-user
-
-  BeforeInstall:
-    - location: bin/before_install.sh
-      timeout: 300
-      runas: root
-
-  AfterInstall:
-    - location: bin/after_install.sh
-      timeout: 300
-
-  ApplicationStart:
-    - location: bin/application_start.sh
-      timeout: 60
-      runas: ec2-user
-
-  ValidateService:
-    - location: bin/validate_service.sh
-      timeout: 15
-      runas: ec2-user
+            
