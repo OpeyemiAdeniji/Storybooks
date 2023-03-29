@@ -12,9 +12,10 @@ phases:
             - echo "Post build phase"
 artifacts:
     files:
-        - scripts/install_dependencies
-        - scripts/start_server
-        - scripts/stop_server
+        - scripts/after-install.sh
+        - scripts/application-start.sh
+        - scripts/application-stop.sh
+        - scripts/before-install.sh
         - index.html
         - appspec.yml
     discard-paths: yes
